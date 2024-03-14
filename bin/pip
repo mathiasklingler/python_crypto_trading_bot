@@ -1,4 +1,4 @@
-#!/Users/mathiasklingler/projects/python_crypto_trading_bot/python_crypto_trading_bot/bin/python3.11
+#!/Users/mathiasklingler/projects/python_crypto_trading_bot/bin/python3.11
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -6,3 +6,6 @@ This repository satisfy the following requirements:
 - Visualisation Backtesting results
 - converting Investing amount into suitable lots for chosen coin
 - ...
+
+Getting Started
+- Inside of the python_crypto_trading_bot/Script directory, run 'pip3 install -r requirements.txt' to install this project’s dependencies.
