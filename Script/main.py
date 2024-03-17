@@ -1,5 +1,6 @@
-from binance.cm_futures import CMFutures
+from binance.um_futures import UMFutures
 import pandas as pd
+from config import api_key, api_secret
 
 def main():
 
@@ -12,12 +13,13 @@ def main():
 
     
 # test binance future account. More Information https://testnet.binancefuture.com/en/futures/BTCUSDT
-api_key = '189ba246fc281f6d25e3f4174afc18aae10bccaf918345bffd6def148ef9bcac'
-api_secret = 'cc7033a66c58e9d3ff97bc24b9a2750906079c0b69fd7c7c43c1fc1f3436e195'
-symbol = 'BTCUSD_PERP'
+# api_key = '189ba246fc281f6d25e3f4174afc18aae10bccaf918345bffd6def148ef9bcac'
+# api_secret = 'cc7033a66c58e9d3ff97bc24b9a2750906079c0b69fd7c7c43c1fc1f3436e195'
+#symbol = 'BTCUSD_PERP'
+symbol = 'BTCUSDT'
 interval = '15m'
 
-cm_futures_client = CMFutures()
+cm_futures_client = UMFutures()
 
 # HMAC Authentication
 #client = Client(api_key, api_secret)
@@ -29,7 +31,7 @@ cm_futures_client = CMFutures()
 print(cm_futures_client.time())
 
 # Connect to testnet future Binance account
-cm_futures_client = CMFutures(key=api_key, secret=api_secret, base_url="https://testnet.binancefuture.com")
+cm_futures_client = UMFutures(key=api_key, secret=api_secret, base_url="https://testnet.binancefuture.com")
 
 # Testing/Development
 coin_data_raw = cm_futures_client.ticker_price(symbol=symbol)
@@ -56,6 +58,9 @@ def get_all_futures_cryptocoin_data(client):
     ticker_prices = client.ticker_price()
     show = pretty_print(ticker_prices)
     return ticker_prices
+a = get_all_futures_cryptocoin_data(cm_futures_client)
+
+
 
 # Get/Return Ticker Prices for ONE specific futures crypt coin
 def get_specific_coin_data(client, symbol):
@@ -63,6 +68,7 @@ def get_specific_coin_data(client, symbol):
     spec_ticker_prices = client.ticker_price(symbol=symbol)
     show_spec = pretty_print(spec_ticker_prices)
     return spec_ticker_prices
+b = get_specific_coin_data(cm_futures_client, symbol)
 
 # Get/Return indepth data for one specific futures crypt coin
 def get_specific_coin_indepth_data(client, symbol, interval):
