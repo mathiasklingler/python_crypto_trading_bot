@@ -13,6 +13,9 @@ from binance.error import ClientError
 symbol = 'BTCUSDT'
 interval = '15m'
 um_futures_client = UMFutures()
+df = pd.DataFrame()
+startTime = '2019-09-12'
+endTime = '2024-01-01'
 
 def main():
     cryptodata = get_all_futures_cryptocoin_data()
@@ -22,14 +25,6 @@ def main():
     print(spec_cryptodata)
     return None
 
-# Comments    
-
-# test binance future account. More Information https://testnet.binancefuture.com/en/futures/BTCUSDT
-# Get account information
-# print(um_futures_client.account())
-# Testing/Development
-#coin_data_raw = um_futures_client.ticker_price(symbol=symbol)
-#coin_data_raw2 = um_futures_client.klines(symbol=symbol, interval=interval)
 
 # get server time and convert it to a readable format
 server_time = um_futures_client.time()
@@ -56,13 +51,11 @@ def get_all_futures_cryptocoin_data(client):
     ticker_prices = client.ticker_price()
     logging.info(um_futures_client.ticker_price("BTCUSDT"))
     
-    # print('############ pretty print ###################')
+    print('############ get_all_futures_cryptocoin_data ###################')
     show = pretty_print(ticker_prices)
     
     return ticker_prices
-a = get_all_futures_cryptocoin_data(um_futures_client)
-
-
+# a = get_all_futures_cryptocoin_data(um_futures_client)
 
 # Get/Return Ticker Prices for ONE specific futures crypt coin
 def get_specific_coin_data(client, symbol):
@@ -70,6 +63,7 @@ def get_specific_coin_data(client, symbol):
     """Fetch specific crypto coin data."""
     
     # print('############ get spc coin data ###################')
+    
     # set logging level to debug
     config_logging(logging, logging.DEBUG)
     spec_ticker_prices = client.ticker_price(symbol=symbol)
@@ -78,7 +72,7 @@ def get_specific_coin_data(client, symbol):
     logging.info(um_futures_client.ticker_price(symbol))
     
     return spec_ticker_prices
-b = get_specific_coin_data(um_futures_client, symbol)
+#b = get_specific_coin_data(um_futures_client, symbol)
 
 # Get/Return indepth data for one specific futures crypt coin
 def get_specific_coin_indepth_data(client, symbol, interval):
@@ -86,23 +80,25 @@ def get_specific_coin_indepth_data(client, symbol, interval):
     """ Fetch specific coin data in depth. """
     
     # print("#############Specific Coin in depth data#############")
+    
     # set logging level to debug
     config_logging(logging, logging.DEBUG)
     
     # get klines/candlestick data
-    spec_future_coin_indepth_data = client.klines(symbol=symbol, interval=interval)
+    spec_future_coin_indepth_data = client.klines(symbol=symbol, interval=interval, startTime=startTime, endTime=endTime, limit=1500)
+    
     # Name the columns by definition. More information https://binance-docs.github.io/apidocs/futures/en/#compressed-aggregate-trades-list --> Klines/Candlestick data
     column_names = ['Open_time', 'Open', 'High', 'Low', 'Close', 'Volume', 'Close_time', 'Quote_asset_volume', 'Number_of_trades', 'Taker_buy_base_asset_volume', 'Taker_buy_quote_asset_volume', 'Ignore'] 
+    
     # set the data into a pandas dataframe
     df = pd.DataFrame(spec_future_coin_indepth_data, columns=column_names)
+    df["Close"] = df["Close"].astype(float)
     df['Open_time'] = pd.to_datetime(df['Open_time'], unit='ms')
     df['Close_time'] = pd.to_datetime(df['Close_time'], unit='ms')
-    print(df)
     logging.info(um_futures_client.klines(symbol, interval))
     
-    return spec_future_coin_indepth_data
-
-coin_data_raw_depth = get_specific_coin_indepth_data(um_futures_client, symbol, interval)
+    return df
+#coin_data_raw_depth = get_specific_coin_indepth_data(um_futures_client, symbol, interval)
 
 # Execute an order    
 def execute_order(um_futures_client, symbol):
@@ -115,8 +111,9 @@ def execute_order(um_futures_client, symbol):
     # Get ticker price
     price = get_specific_coin_data(um_futures_client, symbol)
     
-    # Start executing the order
     # print("#############Execute Order#############")
+    
+    # Start executing the order
     try:
         response = um_futures_client.new_order(
             symbol=symbol,
@@ -154,8 +151,7 @@ def get_infos_execute_order(symbol):
             break
     # Return tick size, min quantity and max quantity
     return tickSize, minQty, maxQty
-    
-c = execute_order(um_futures_client, symbol)
+# c = execute_order(um_futures_client, symbol)
 
 # if __name__ == "__main__":Í
     # main()

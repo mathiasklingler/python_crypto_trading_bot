@@ -9,3 +9,4 @@ This repository satisfy the following requirements:
 
 Getting Started
 - Inside of the python_crypto_trading_bot/Script directory, run 'pip3 install -r requirements.txt' to install this project’s dependencies.
+- Custom command (venv): python_crypto_trading_bot/bin/pip3 install -r python_crypto_trading_bot/Script/requirements.txt
