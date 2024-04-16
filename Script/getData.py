@@ -61,9 +61,19 @@ def get_specific_coin_indepth_data(client, symbol, interval, startTime, endTime)
     
     # set the data into a pandas dataframe
     df = pd.DataFrame(spec_future_coin_indepth_data, columns=column_names)
+    
+    # Optional: Convert data to float and datetime
     df["Close"] = df["Close"].astype(float)
+    df['Volume'] = df['Volume'].astype(float) 
     df['Open_time'] = pd.to_datetime(df['Open_time'], unit='ms')
-    df['Close_time'] = pd.to_datetime(df['Close_time'], unit='ms')
+    #df['Close_time'] = pd.to_datetime(df['Close_time'], unit='ms')
+    
     logging.info(client.klines(symbol, interval))
+    
+    # Optionally: Convert datetime to int
+    """
+    df['Open_time'] = pd.to_datetime(df['Open_time']).astype(int)
+    df['Close_time'] = pd.to_datetime(df['Close_time']).astype(int)
+    """
     
     return df

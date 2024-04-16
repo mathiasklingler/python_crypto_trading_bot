@@ -1,10 +1,10 @@
 
 parametrization = dict(
-    environment = 'testnet',
+    environment = 'backtesting',
     symbol = 'BTCUSDT',
-    interval = '15m',
-    startTime = '2019-09-12',
-    endTime = '2024-01-01',
+    interval = '1h',
+    startTime = '2024-02-23',
+    endTime = '2024-04-16',
     investment = 500,
     fee_per_transaction = 0.0004
 )

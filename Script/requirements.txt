@@ -1,4 +1,5 @@
 binance-futures-connector
 pandas
 matplotlib
+scikit-learn
 #python-binance
