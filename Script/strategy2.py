@@ -18,7 +18,7 @@ def prepare_data(df):
     Set labels. 
     """
     
-    print("################## Prepare data ###############################")
+    #print("################## Prepare data ###############################")
     
     ### Strategy Parameters ###
     
@@ -81,7 +81,8 @@ def train_model(evidence, labels):
     Given a list of evidence lists and a list of labels, return a
     fitted k-nearest neighbor model (k=1) trained on the data.
     """
-    
+    #print("############ train_model ###############*")
+    #print(f'evidence: {evidence}')
     k_model = model.fit(evidence, labels)
     joblib.dump(k_model, 'python_crypto_trading_bot/Results/11_1_strategy2_model.pkl')
     return k_model

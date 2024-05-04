@@ -2,4 +2,5 @@ binance-futures-connector
 pandas
 matplotlib
 scikit-learn
+APScheduler
 #python-binance

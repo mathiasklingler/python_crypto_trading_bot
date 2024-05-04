@@ -8,21 +8,21 @@ def trading_job(client, df, symbol, investment_amount):
     
     print("#############Trading Job#############")
     # Filter only last record
-    df_lastrecord = df.iloc[-1]
-    if df_lastrecord.Signal == 'Hold':
-        print('Buy Signal. Execute order: ')
+    # df_lastrecord = df.iloc[-1]
+    if df['Signal'] == 'BUY':
+        print('BUY Signal. Execute order: ')
         print("Datum: ", datetime.today())
-        order = execute_order(client, symbol, 'BUY', investment_amount, df_lastrecord['Close'])
+        order = execute_order(client, symbol, 'BUY', investment_amount, df['Close'])
         #get_symbol_infos(client, symbol)
         print(order)
-    elif df_lastrecord.Signal == 'Sell':
-        print('sell: ')
+    elif df['Signal'] == 'SELL':
+        print('SELL: ')
         print("Datum: ", datetime.today())
-        print(df_lastrecord)
+        print(df)
     else:
         print('no buy or sell signal.')
         print("Datum: ", datetime.today())
-        print(df_lastrecord)
+        print(df)
         return 0
 
 # Execute an order    

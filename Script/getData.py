@@ -43,7 +43,7 @@ def get_specific_coin_data(client, symbol):
 #b = get_specific_coin_data(um_futures_client, symbol)
 
 # Get/Return indepth data for one specific futures crypt coin
-def get_specific_coin_indepth_data(client, symbol, interval, startTime, endTime):
+def get_specific_coin_indepth_data(client, symbol, interval, startTime, endTime, limit):
     
     """ Fetch specific coin data in depth. """
     df = pd.DataFrame()
@@ -54,7 +54,7 @@ def get_specific_coin_indepth_data(client, symbol, interval, startTime, endTime)
     config_logging(logging, logging.DEBUG)
     
     # get klines/candlestick data
-    spec_future_coin_indepth_data = client.klines(symbol=symbol, interval=interval, startTime=startTime, endTime=endTime, limit=1500)
+    spec_future_coin_indepth_data = client.klines(symbol=symbol, interval=interval, startTime=startTime, endTime=endTime, limit=limit)
     
     # Name the columns by definition. More information https://binance-docs.github.io/apidocs/futures/en/#compressed-aggregate-trades-list --> Klines/Candlestick data
     column_names = ['Open_time', 'Open', 'High', 'Low', 'Close', 'Volume', 'Close_time', 'Quote_asset_volume', 'Number_of_trades', 'Taker_buy_base_asset_volume', 'Taker_buy_quote_asset_volume', 'Ignore'] 
@@ -66,7 +66,7 @@ def get_specific_coin_indepth_data(client, symbol, interval, startTime, endTime)
     df["Close"] = df["Close"].astype(float)
     df['Volume'] = df['Volume'].astype(float) 
     df['Open_time'] = pd.to_datetime(df['Open_time'], unit='ms')
-    #df['Close_time'] = pd.to_datetime(df['Close_time'], unit='ms')
+    #print(df)
     
     logging.info(client.klines(symbol, interval))
     
